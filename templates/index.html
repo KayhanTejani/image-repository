@@ -1,27 +1,27 @@
 {% extends 'base.html' %}
 
-{% block head %}
-
+{% block content %}
+<hr>
+<div>
+    <table style="border-collapse: collapse; width: 100%; text-align: center;">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for image in images %}
+            <tr class="seperator">
+                <td><img src="http://localhost:5000/retrieve/{{ image.id }}" width="100px" height="100px"></td>
+                <td>{{image.name}}</td>
+                <td>{{image.description}}</td>
+                <td>Delete Button</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
-
-{% block body %}
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Image</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Generic Name</td>
-            <td>Test Description</td>
-            <td>Image to be shown here</td>
-            <td>Delete Button</td>
-        </tr>
-    </tbody>
-</table>
-{% endblock %}
-
