@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, url_for, send_file
+from flask import Flask, render_template, url_for, send_file, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from io import BytesIO
 
@@ -24,6 +24,21 @@ def retrieve(id):
     return send_file(BytesIO(file.file), attachment_filename=f'{file.name}', mimetype='image/jpg')
 
 
+@app.route('/upload', methods=["GET", "POST"])
+def upload():
+    if request.method == "POST":
+        if 'uploaded_image' not in request.files:
+            return render_template('index.html')
+        file = request.files['uploaded_image']
+        name = file.filename
+        if request.form['name']:
+            name = request.form['name']
+        description = request.form['description']
+    
+    db.session.add(ImageTable(name, description, file.read()))
+    db.session.commit()
+
+    return redirect(url_for('index'))
 
 # database schema
 class ImageTable(db.Model):
