@@ -29,16 +29,34 @@ def upload():
     if request.method == "POST":
         if 'uploaded_image' not in request.files:
             return render_template('index.html')
+
         file = request.files['uploaded_image']
         name = file.filename
+
         if request.form['name']:
             name = request.form['name']
         description = request.form['description']
-    
-    db.session.add(ImageTable(name, description, file.read()))
-    db.session.commit()
 
-    return redirect(url_for('index'))
+        try:
+            db.session.add(ImageTable(name, description, file.read()))
+            db.session.commit()
+            return redirect(url_for('index'))
+        except:
+            return "There was an error uploading your image"
+
+
+@app.route('/delete/<id>')
+def delete(id):
+
+    file = ImageTable.query.filter_by(id=id).first()
+
+    try:
+       db.session.delete(file)
+       db.session.commit()
+       return redirect(url_for('index'))
+    except:
+       return "There was a problem deleting that image"
+    
 
 # database schema
 class ImageTable(db.Model):

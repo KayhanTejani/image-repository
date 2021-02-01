@@ -30,9 +30,9 @@
             <tr class="seperator">
                 <td><a href="/retrieve/{{image.id}}" target="_blank"><img src="http://localhost:5000/retrieve/{{ image.id }}"
                             width="200px" height="150px"></a></td>
-                <td>{{image.name}}</td>
+                <td><a href="/retrieve/{{image.id}}" target="_blank">{{image.name}}</td>
                 <td>{{image.description}}</td>
-                <td>Delete Button</td>
+                <td><button onclick="location.href='/delete/{{image.id}}'">Delete</button></td>
             </tr>
             {% endfor %}
         </tbody>
